@@ -1,12 +1,14 @@
 from bleak import BleakScanner
 import asyncio
 import random
+
+from influxdb_client import Point
 from pylgbst import logging, get_connection_bleak
 from pylgbst.hub import MoveHub
 from pylgbst.peripherals import EncodedMotor, TiltSensor
 from paho.mqtt import client as mqtt_client
 import influxdb_client
-from influxdb_client.client.write_api import ASYNCHRONOUS
+from influxdb_client.client.write_api import ASYNCHRONOUS, SYNCHRONOUS
 
 # MQTT settings
 broker = "0.0.0.0"
@@ -17,10 +19,11 @@ username = "Lukash"
 password = "bumbumbum"
 
 # InfluxDB settings
-bucket = "lego"
-org = "..."
-token = "..."
-url = "..."
+bucket = "iot_center"
+org = "my-org"
+token = "my-token"
+url = "http://localhost:8086"
+
 
 def connect_mqtt():
     def on_connect(rc):
@@ -36,15 +39,9 @@ def connect_mqtt():
     return client2
 
 
-client_mqtt = connect_mqtt()
-
-client = influxdb_client.InfluxDBClient(url=url, token=token, org=org)
-
-write_api = client.write_api(write_options=ASYNCHRONOUS)
-
-
 def data_send(metric_name, data, mode="influx"):
-    p = influxdb_client.Point("Lego").tag("device_ID", UUID).field(metric_name, int(data))
+    p = Point("Lego").tag("device_ID", UUID).field(metric_name, float(data))
+    logging.info("> " + p.to_line_protocol())
     if mode == "influx":
         write_api.write(bucket=bucket, org=org, record=p)
     else:
@@ -88,15 +85,11 @@ def sequence(mhub):
 
 
 def run(mhub):
-    run.states = {mhub.motor_A: 0, mhub.motor_B: 0, mhub.motor_external: 0}
+    def callback_a(speed):
+        data_send("motor_a", speed)
 
-    def callback_a(param1):
-        run.states[mhub.motor_A] = param1
-        data_send("motor_a", run.states[mhub.motor_A])
-
-    def callback_b(param1):
-        run.states[mhub.motor_B] = param1
-        data_send("motor_b", run.states[mhub.motor_B])
+    def callback_b(speed):
+        data_send("motor_b", speed)
 
     def rgb_callback(values):
         data_send("rgb", values)
@@ -107,7 +100,7 @@ def run(mhub):
         data_send("z", z)
 
     def battery_callback(values):
-        data_send("Voltage", values)
+        data_send("voltage", values)
 
     mhub.motor_A.subscribe(callback_a, mode=EncodedMotor.SENSOR_SPEED)
     mhub.motor_B.subscribe(callback_b, mode=EncodedMotor.SENSOR_SPEED)
@@ -130,6 +123,12 @@ if __name__ == '__main__':
 
     hub = None
     try:
+        client = influxdb_client.InfluxDBClient(url=url, token=token, org=org)
+        client.ping()
+        write_api = client.write_api(write_options=SYNCHRONOUS)
+
+        client_mqtt = connect_mqtt()
+
         logging.info("Connecting to Lego Hub...")
         connection = get_connection_bleak(hub_mac=str(UUID), hub_name=str(name))
         parameters['connection'] = connection
