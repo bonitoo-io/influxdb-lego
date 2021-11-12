@@ -55,12 +55,12 @@ and click `Register`.
 ```bash
 python ./boost-iot-center.py
 ```
+
 On first time you will need to enable BlueTooth access in MacOS security preferences dialog popup.
 
-Run again and **immediately press green button on lego brick**.  
+Run again and **immediately press green button on lego brick**.
 
-Demo will autodetect your lego hub and starts in 5-10s. 
-The output should look like:
+Demo will autodetect your lego hub and starts in 5-10s. The output should look like:
 
 ```text
 (venv) ➜  influxdb-lego git:(main) ✗ python ./boost-iot-center.py
@@ -89,6 +89,14 @@ The output should look like:
 13351	INFO	root	> environment,CO2Sensor=virtual_CO2Sensor,HumiditySensor=virtual_HumiditySensor,PressureSensor=virtual_PressureSensor,TVOCSensor=virtual_TVOCSensor,clientId=lego_boost Pressure=2 1636729176347604000
 
 ```
+
+For lego metrics are mapped to IoT Center hardcoded weather metrics:
+
+- TVOC -> motor angle
+- Pressure -> tilt sensor x-axis
+- Temperature -> tilt sensor y-axis
+- Humidity -> tilt sensor z-axis
+- CO2 -> battery voltage
 
 IoT Center should look like:
 
