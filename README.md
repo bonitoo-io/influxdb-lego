@@ -90,7 +90,7 @@ Demo will autodetect your lego hub and starts in 5-10s. The output should look l
 
 ```
 
-For lego metrics are mapped to IoT Center hardcoded weather metrics:
+Lego metrics are mapped to IoT Center hardcoded weather metrics:
 
 - TVOC -> motor angle
 - Pressure -> tilt sensor x-axis
