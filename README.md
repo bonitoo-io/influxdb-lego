@@ -92,6 +92,6 @@ The output should look like:
 
 IoT Center should look like:
 
-!![screen](docs/iot-center-lego-stream.gif)
+![screen](docs/iot-center-lego-stream.gif)
 
 
