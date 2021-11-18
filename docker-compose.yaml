@@ -22,3 +22,24 @@ services:
       - "1883:1883"
     volumes:
      - $PWD/mosquitto:/mosquitto/
+
+  telegraf:
+    image: telegraf:latest
+    volumes:
+      - $PWD/config/telegraf.conf:/etc/telegraf/telegraf.conf
+
+  iot_center:
+    image: ghcr.io/bonitoo-io/iot-center-v2/iot-center:nightly
+    ports:
+      - "5000:5000"
+    environment:
+      - INFLUX_URL=http://${EXTERNAL_IP}:8086
+      - INFLUX_TOKEN=my-token
+      - INFLUX_ORG=my-org
+      - MQTT_TOPIC=iot_center
+      - MQTT_URL=mqtt://${EXTERNAL_IP}:1883
+    depends_on:
+      - mosquitto
+      - influxdb_v2
+      - telegraf
+

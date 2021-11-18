@@ -1,6 +1,9 @@
-# influxdb-lego
+# InfluxDB & Lego Boost realtime monitoring demo
 
-Demo Lego Boost, InfluxDB, IoT Center, MQTT realtime dashboards
+This demo shows how to monitor your Lego Boost Robot using InfluxDB, Telegraf, IoT Center Demo with MQTT realtime
+dashboards.
+
+![img.png](docs/boost-robot.png)
 
 ## Python3 requirements
 
@@ -14,36 +17,37 @@ cd influxdb-lego
 python3 -m venv venv
 source venv/bin/activate
 
-pip install bleak pylgbst influxdb_client paho_mqtt
+pip install -r requirements.txt
 ```
 
 ## Realtime monitoring of Lego Boost robot using IoT Center demo
 
-In the separate directory:
+You will need to set your real local network IP address into `EXTERNAL_IP` variable in `.env`
 
 ```bash
-# clone iot-center-v2 repo
-git clone https://github.com/bonitoo-io/iot-center-v2.git
-cd iot-center-v2  
-
-# switch to feat/lego_demo branch
-git checkout feat/lego_demo
-
-# edit .env and set your local network IP address
+# edit .env and set 
 nano .env
+```
 
-#Iot Center requires following free ports that are not bind:
-# 1883 (mqtt broker)
-# 8086 (influxdb 2.0 OSS)
-# 5000, 3000 nodejs server and UI app
+Start the latest version of IotCenter using `docker-compose`.
 
+```bash
 docker-compose up
 ```
 
-It will take several minutes to build and run the IotCenter.
+It will take several seconds to start the IotCenter.
 
-Then the open http://localhost:5000/devices and click `Register` to add a new device. Enter `lego_boost` as a device id
-and click `Register`.
+Note that the Iot Center requires following free ports that are not bind:
+
+- **1883** (mqtt broker)
+- **8086** (influxdb 2.0 OSS)
+- **5000**, 3000 nodejs server and UI app
+
+The next step is to register your Lego Boost robot into IotCenter. Open the IoT Center UI
+on <http://localhost:5000/devices> and click **Register** to add a new device. Enter `lego_boost` as a device id and
+confirm by clicking **Register**.
+
+![screen](docs/register.png)
 
 ## Prepare Lego Boost for Bluetooth pairing
 
@@ -87,7 +91,6 @@ Demo will autodetect your lego hub and starts in 5-10s. The output should look l
 13148	INFO	root	> environment,CO2Sensor=virtual_CO2Sensor,HumiditySensor=virtual_HumiditySensor,PressureSensor=virtual_PressureSensor,TVOCSensor=virtual_TVOCSensor,clientId=lego_boost TVOC=-1 1636729176145016000
 13251	INFO	root	> environment,CO2Sensor=virtual_CO2Sensor,HumiditySensor=virtual_HumiditySensor,PressureSensor=virtual_PressureSensor,TVOCSensor=virtual_TVOCSensor,clientId=lego_boost rgb=3 1636729176247289000
 13351	INFO	root	> environment,CO2Sensor=virtual_CO2Sensor,HumiditySensor=virtual_HumiditySensor,PressureSensor=virtual_PressureSensor,TVOCSensor=virtual_TVOCSensor,clientId=lego_boost Pressure=2 1636729176347604000
-
 ```
 
 Lego metrics are mapped to IoT Center hardcoded weather metrics:
@@ -98,8 +101,7 @@ Lego metrics are mapped to IoT Center hardcoded weather metrics:
 - Humidity -> tilt sensor z-axis
 - CO2 -> battery voltage
 
-IoT Center should look like:
+Check IoT Center: [http://localhost:5000/realtime/lego_boost](http://localhost:5000/realtime/lego_boost)
 
 ![screen](docs/iot-center-lego-stream.gif)
-
 
