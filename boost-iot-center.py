@@ -89,6 +89,93 @@ def run(mhub):
     while True:
         try:
             sleep(0.3)
+            # Delete the quotation marks bellow for fun zorba dance (https://musescore.com/user/14008706/scores/4866772)
+            """
+            bl = 60 / 42 # 6O / bpm
+            minbl = 120 / 160
+            s = 0.2 # speed  (0 - 0.5)
+
+            def spin(): 
+                    mhub.motor_B.start_speed(-s)
+                    mhub.motor_A.start_speed(-s)
+                    sleep(bl/2)
+                    mhub.motor_A.start_speed(-s * 2)
+                    mhub.motor_B.start_speed(+s * 2)
+                    sleep(bl/2)
+                    mhub.motor_A.start_speed(s)
+                    mhub.motor_B.start_speed(-s)
+                    sleep(bl/2)
+                    mhub.motor_AB.stop
+            def basic(dir): # Two bars
+                mhub.motor_AB.start_speed(dir * s)
+                sleep(bl/2)
+                spin()
+                mhub.motor_AB.start_speed(-dir * s)
+                sleep(bl/2)              
+                spin()   
+                mhub.motor_AB.stop   
+            def spinning(dir): # Divide speed argument to slow down spinning, one bar
+                mhub.motor_A.start_speed(dir * minbl/bl)
+                mhub.motor_B.start_speed(dir * minbl/bl)
+                sleep(2 * bl)
+
+            for x in range(3):
+                basic(1)
+            for x in range(1):
+                basic(-1)
+            for x in range(4):
+                basic(1)
+            for x in range(2):
+                basic(-1)
+            for x in range(5):
+                basic(1)
+            bl = 60 / 48
+            for x in range(5):
+                basic(1)
+            bl = 60/68
+            for x in range(2):
+                spinning(1)
+            for x in range(4):
+                spinning(-1)
+            for x in range(4):
+                spinning(1)
+            for x in range(6):
+                spinning(-1)
+            for x in range(10):
+                spinning(1)
+            for x in range(2):
+                spinning(-1)
+            bl = 60/90
+            for x in range(10):
+                basic(1)
+            for x in range(2):
+                basic(-1)
+            for x in range(2):
+                basic(1)
+            bl = minbl
+            for x in range(10):
+                spinning(1)
+            for x in range(4):
+                spinning(-1)
+            for x in range(4):
+                spinning(1)
+            for x in range(4):
+                spinning(-1)
+            for x in range(8):
+                spinning(1)
+            for x in range(4):
+                spinning(-1)
+            for x in range(4):
+                spinning(1)
+            for x in range(4):
+                spinning(-1)
+            for x in range(6):
+                spinning(1)
+            for x in range(4):
+                spinning(-1)
+            for x in range(4):
+                spinning(1)
+            """
         except KeyboardInterrupt:
             break
 
