@@ -3,3 +3,4 @@ bleak
 pylgbst
 influxdb_client
 paho_mqtt
+pygame
