@@ -1,22 +1,14 @@
-from bleak import BleakScanner
 import asyncio
 import random
 
+import influxdb_client
 from influxdb_client import Point
+from influxdb_client.client.write_api import ASYNCHRONOUS
 from pylgbst import logging, get_connection_bleak
 from pylgbst.hub import MoveHub
 from pylgbst.peripherals import EncodedMotor, TiltSensor
-from paho.mqtt import client as mqtt_client
-import influxdb_client
-from influxdb_client.client.write_api import ASYNCHRONOUS, SYNCHRONOUS
 
-# MQTT settings
-broker = "0.0.0.0"
-port = 1883
-topic = "/lego/mqtt"
-client_id = f"python-mqtt-{random.randint(0, 1000)}"
-username = "Lukash"
-password = "bumbumbum"
+from lego_utils import auto_search
 
 # InfluxDB settings
 bucket = "iot_center"
@@ -25,63 +17,24 @@ token = "my-token"
 url = "http://localhost:8086"
 
 
-def connect_mqtt():
-    def on_connect(rc):
-        if rc == 0:
-            print("Connected to MQTT Broker!")
-        else:
-            print("Failed to connect, return code %d\n", rc)
-
-    client2 = mqtt_client.Client(client_id)
-    client2.username_pw_set(username, password)
-    client2.on_connect = on_connect
-    client2.connect(broker, port)
-    return client2
-
-
-def data_send(metric_name, data, mode="influx"):
+def data_send(metric_name, data):
     p = Point("Lego").tag("device_ID", UUID).field(metric_name, float(data))
     logging.info("> " + p.to_line_protocol())
-    if mode == "influx":
-        write_api.write(bucket=bucket, org=org, record=p)
-    else:
-        client_mqtt.publish(topic, p.to_line_protocol())
+    write_api.write(bucket=bucket, org=org, record=p)
 
 
-async def auto_search():
-    logging.basicConfig(level=logging.INFO, format='%(relativeCreated)d\t%(levelname)s\t%(name)s\t%(message)s')
-    logging.info("Searching for Lego Hub...")
-    devices = await BleakScanner.discover(timeout=10)
-    possible_devices = []
-    for d in devices:
-        if d.name == "Move Hub":
-            possible_devices.append(d)
-
-    if len(str(possible_devices[1].metadata)) > len(str(possible_devices[0].metadata)):
-        return possible_devices[1].name, possible_devices[1].address
-    else:
-        return possible_devices[0].name, possible_devices[0].address
-
-
-def led_random(mhub):
-    for x in range(20):
-        mhub.led.set_color(random.randrange(0, 10))
-
-
-def motor_loop1(mhub):
-    mhub.motor_A.timed(2, 0.5)
-    mhub.motor_B.timed(2, 0.1)
+def do_work(mhub):
+    mhub.motor_A.timed(1, 0.5)
+    mhub.motor_B.timed(1, 0.1)
     mhub.motor_B.timed(1, 0.5)
     mhub.motor_AB.timed(0.5, 0.5)
-    mhub.motor_A.timed(2, -0.5)
+    mhub.motor_A.timed(1, -0.5)
     mhub.motor_B.timed(1, -0.5)
-    mhub.motor_B.timed(2, 0.2)
-    # mhub.motor_AB.timed(-0.5,  0.5)
+    mhub.motor_B.timed(1, 0.2)
+    mhub.motor_AB.timed(-0.5, 0.5)
 
-
-def sequence(mhub):
-    motor_loop1(mhub)
-    led_random(mhub)
+    for x in range(20):
+        mhub.led.set_color(random.randrange(0, 10))
 
 
 def run(mhub):
@@ -107,7 +60,9 @@ def run(mhub):
     mhub.led.subscribe(rgb_callback)
     mhub.tilt_sensor.subscribe(axis_callback, mode=TiltSensor.MODE_3AXIS_ACCEL)
     mhub.voltage.subscribe(battery_callback)
-    sequence(mhub)
+
+    do_work(mhub)
+
     mhub.led.unsubscribe(rgb_callback)
     mhub.tilt_sensor.unsubscribe(axis_callback)
     mhub.voltage.unsubscribe(battery_callback)
@@ -125,10 +80,7 @@ if __name__ == '__main__':
     try:
         client = influxdb_client.InfluxDBClient(url=url, token=token, org=org)
         client.ping()
-        write_api = client.write_api(write_options=SYNCHRONOUS)
-
-        client_mqtt = connect_mqtt()
-
+        write_api = client.write_api(write_options=ASYNCHRONOUS)
         logging.info("Connecting to Lego Hub...")
         connection = get_connection_bleak(hub_mac=str(UUID), hub_name=str(name))
         parameters['connection'] = connection

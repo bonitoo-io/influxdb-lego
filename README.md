@@ -82,7 +82,7 @@ confirm by clicking **Register**.
 ### Run Python demo
 
 ```bash
-python ./boost-iot-center.py
+python ./boost_iot_center.py
 ```
 
 On the first time, you will need to enable BlueTooth access in the MacOS security preferences dialogue popup.
