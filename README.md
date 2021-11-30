@@ -3,8 +3,6 @@
 This demo shows how to monitor your Lego Boost Robot using InfluxDB, Telegraf, IoT Center Demo with MQTT realtime
 dashboards.
    
-
-![img.png](docs/boost-robot.png)  
 [![img.png](docs/video.png)](https://www.youtube.com/watch?v=Cp2gDleP8_M)
 
 ## Description 
