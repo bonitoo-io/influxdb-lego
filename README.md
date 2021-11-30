@@ -2,14 +2,16 @@
 
 This demo shows how to monitor your Lego Boost Robot using InfluxDB, Telegraf, IoT Center Demo with MQTT realtime
 dashboards.
+   
 
-![img.png](docs/boost-robot.png)
+![img.png](docs/boost-robot.png)  
+[![img.png](docs/video.png)](https://www.youtube.com/watch?v=Cp2gDleP8_M)
 
 ## Description 
 
-This application was designed to display and store real-time data from LEGO Mindstorm Robot Inventor and LEGO Boost
-because the application from LEGO lacks this feature. We used InfluxDB to store the data since it's the fastest way to
-do so. 
+This application was designed to display and store real-time data from LEGO Boost Robot and because the application from
+LEGO lacks this feature. We used InfluxDB to store the data, MQTT, Telegraf, IotCenter Demo to show realtime since it's
+the fastest way to do so.
 
 In future we want to support monitoring of all lego robots, such as Robot Inventor and EV3, so that we can then store
 time series for color, ultrasonic, and infrared sensors and not just gyro sensor and motors. Our program will also
