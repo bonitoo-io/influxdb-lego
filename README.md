@@ -1,14 +1,29 @@
-# InfluxDB & Lego Boost realtime monitoring demo
+# InfluxDB & Lego Boost real-time monitoring demo
 
 This demo shows how to monitor your Lego Boost Robot using InfluxDB, Telegraf, IoT Center Demo with MQTT realtime
 dashboards.
 
 ![img.png](docs/boost-robot.png)
 
-## Python3 requirements
+## Description 
 
-I recommend to use Python Virtual Environment <https://docs.python.org/3/tutorial/venv.html>
-to have clean setup.
+This application was designed to display and store real-time data from LEGO Mindstorm Robot Inventor and LEGO Boost
+because the application from LEGO lacks this feature. We used InfluxDB to store the data since it's the fastest way to
+do so. 
+
+In future we want to support monitoring of all lego robots, such as Robot Inventor and EV3, so that we can then store
+time series for color, ultrasonic, and infrared sensors and not just gyro sensor and motors. Our program will also
+provide some calculations based on the data it monitors such as speed, acceleration, trajectory, energy consumption,
+lead (for racing), health (for robot battles), work performance (for lego factories), and more.
+
+## How to install
+
+### IoT Center setup
+
+After cloning this repository, you should be ready to set up our IoT Center. 
+
+We recommend using Python Virtual Environment <https://docs.python.org/3/tutorial/venv.html>
+to have a clean setup.
 
 ```bash
 https://github.com/bonitoo-io/influxdb-lego.git
@@ -20,16 +35,24 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Realtime monitoring of Lego Boost robot using IoT Center demo
+At first, you should download and install docker from here: https://www.docker.com/get-started. 
 
-You will need to set your real local network IP address into `EXTERNAL_IP` variable in `.env`
+After that, you will need to set your real local network IP address into `EXTERNAL_IP` variable in `.env`.
+
+To find your IP on Mac address, simply open a terminal and type:
+
+```bash
+ipconfig getifaddr en0
+```
+
+Copy to clipboard and then execute this command:
 
 ```bash
 # edit .env and set 
 nano .env
 ```
-
-Start the latest version of IotCenter using `docker-compose`.
+Fill your `EXTERNAL_IP` and then save it using `ctrl + x`.
+All you have to do now is to start the latest version of IotCenter using `docker-compose`.
 
 ```bash
 docker-compose up
@@ -37,11 +60,13 @@ docker-compose up
 
 It will take several seconds to start the IotCenter.
 
-Note that the Iot Center requires following free ports that are not bind:
+Note that the IoT Center requires the following free ports that do not bind:
 
 - **1883** (mqtt broker)
 - **8086** (influxdb 2.0 OSS)
 - **5000**, 3000 nodejs server and UI app
+
+### Lego Boost registration 
 
 The next step is to register your Lego Boost robot into IotCenter. Open the IoT Center UI
 on <http://localhost:5000/devices> and click **Register** to add a new device. Enter `lego_boost` as a device id and
@@ -49,22 +74,22 @@ confirm by clicking **Register**.
 
 ![screen](docs/register.png)
 
-## Prepare Lego Boost for Bluetooth pairing
+### Prepare Lego Boost for Bluetooth pairing
 
 - Install Lego Boost app on iPhone or Android device and run firmware upgrade
 - Ensure that Robot is working with your iOS or Android device
-
-## Run Python demo
+- Press the green
+### Run Python demo
 
 ```bash
 python ./boost-iot-center.py
 ```
 
-On first time you will need to enable BlueTooth access in MacOS security preferences dialog popup.
+On the first time, you will need to enable BlueTooth access in the MacOS security preferences dialogue popup.
 
-Run again and **immediately press green button on lego brick**.
+Run again and **immediately press the green button on lego brick**.
 
-Demo will autodetect your lego hub and starts in 5-10s. The output should look like:
+The demo will autodetect your lego hub and start in 5-10s. The output should look like this:
 
 ```text
 (venv) ➜  influxdb-lego git:(main) ✗ python ./boost-iot-center.py
@@ -95,11 +120,11 @@ Demo will autodetect your lego hub and starts in 5-10s. The output should look l
 
 Lego metrics are mapped to IoT Center hardcoded weather metrics:
 
-- TVOC -> motor angle
-- Pressure -> tilt sensor x-axis
-- Temperature -> tilt sensor y-axis
-- Humidity -> tilt sensor z-axis
+- Temperature -> total tilt / tilt from the vertical direction
+- Humidity -> forward and backward tilt
+- Pressure -> sideway tilt
 - CO2 -> battery voltage
+- TVOC -> motor angle
 
 Check IoT Center: [http://localhost:5000/realtime/lego_boost](http://localhost:5000/realtime/lego_boost)
 
