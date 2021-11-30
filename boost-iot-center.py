@@ -3,6 +3,7 @@ import datetime
 import random
 from time import sleep
 
+from playsound import playsound
 from bleak import BleakScanner
 from influxdb_client import Point
 from paho.mqtt import client as mqtt_client
@@ -88,7 +89,140 @@ def run(mhub):
 
     while True:
         try:
-            sleep(0.3)
+             # Delete the quotation marks bellow for fun zorba dance setup
+            """
+             maxbl = 60 / 42 # 6O / bpm
+             minbl = 60 / 160
+             mins = 0.1
+             p = 0.2
+
+             s = mins # speed  (0 - 0.5)
+             bl = maxbl
+
+             def spin():
+                     mhub.motor_A.start_speed(s)
+                     mhub.motor_B.start_speed(-s)
+                     sleep(bl/2-p)
+                     mhub.motor_A.stop
+                     mhub.motor_B.stop
+                     sleep(p)
+                     mhub.motor_A.start_speed(-s * 2)
+                     mhub.motor_B.start_speed(+s * 2)
+                     sleep(bl/2-p)
+                     mhub.motor_A.stop
+                     mhub.motor_B.stop
+                     sleep(p)
+                     mhub.motor_A.start_speed(s)
+                     mhub.motor_B.start_speed(-s)
+                     sleep(bl/2-p)
+                     mhub.motor_A.stop
+                     mhub.motor_B.stop
+                     sleep(p)
+             def basic(dir): # Two bars
+                 mhub.motor_A.start_speed(dir * s)
+                 mhub.motor_B.start_speed(dir * s)
+                 sleep(bl/2-p)
+                 mhub.motor_A.stop
+                 mhub.motor_B.stop
+                 sleep(p) 
+                 spin()
+                 mhub.motor_A.start_speed(-dir * s)
+                 mhub.motor_B.start_speed(-dir * s)
+                 sleep(bl/2-p)  
+                 mhub.motor_A.stop
+                 mhub.motor_B.stop
+                 sleep(p)      
+                 spin()   
+             def spinning(dir): 
+                 mhub.motor_A.start_speed(dir * minbl/bl/1.5)
+                 mhub.motor_B.start_speed(-dir * minbl/bl/1.5)
+                 sleep(2 * bl-p)
+                 mhub.motor_A.stop
+                 mhub.motor_B.stop
+                 sleep(p)
+
+            """
+            # Delete the quotation marks bellow for short version
+            """
+             basic(1)
+             basic(-1)
+             bl = minbl * 2
+             spinning(1)
+             spinning(-1)
+            """
+            # Delete the quotation marks bellow for long version (https://musescore.com/user/14008706/scores/4866772)
+            """
+             playsound('Zorba_s_Dance_Sirrtaki.mp3')
+             for x in range(3):
+                 basic(1)
+             for x in range(1):
+                 basic(-1)
+             for x in range(4):
+                 basic(1)
+             for x in range(2):
+                 basic(-1)
+             for x in range(5):
+                 basic(1) 
+
+             bl = 60 / 48
+             s = mins / (bl / maxbl)
+
+             for x in range(5):
+                 basic(1)
+
+             bl = 60/68
+             s = mins / (bl / maxbl)
+
+             for x in range(2):
+                 spinning(1)
+             for x in range(4):
+                 spinning(-1)
+             for x in range(4):
+                 spinning(1)
+             for x in range(6):
+                 spinning(-1)
+             for x in range(10):
+                 spinning(1)
+             for x in range(2):
+                 spinning(-1)
+
+             bl = 60/90
+             s = mins / (bl / maxbl)
+
+             for x in range(10):
+                 basic(1)
+             for x in range(2):
+                 basic(-1)
+             for x in range(2):
+                 basic(1)
+
+             bl = minbl
+             s = mins / (bl / maxbl)
+             
+             for x in range(10):
+                 spinning(1)
+             for x in range(4):
+                 spinning(-1)
+             for x in range(4):
+                 spinning(1)
+             for x in range(4):
+                 spinning(-1)
+             for x in range(8):
+                 spinning(1)
+             for x in range(4):
+                 spinning(-1)
+             for x in range(4):
+                 spinning(1)
+             for x in range(4):
+                 spinning(-1)
+             for x in range(6):
+                 spinning(1)
+             for x in range(4):
+                 spinning(-1)
+             for x in range(4):
+                 spinning(1)
+             """
+            
         except KeyboardInterrupt:
             break
 
