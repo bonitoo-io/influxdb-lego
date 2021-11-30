@@ -1,6 +1,5 @@
 import asyncio
 import datetime
-import random
 from time import sleep
 
 from influxdb_client import Point
@@ -17,6 +16,7 @@ broker = "0.0.0.0"
 port = 1883
 topic = "iot_center"
 
+
 def connect_mqtt():
     def on_connect(rc):
         if rc == 0:
@@ -30,42 +30,46 @@ def connect_mqtt():
     return client2
 
 
-def data_send(metric_name, data):
+def send(data):
     p = Point("environment") \
         .tag("CO2Sensor", "virtual_CO2Sensor") \
         .tag("PressureSensor", "virtual_PressureSensor") \
         .tag("HumiditySensor", "virtual_HumiditySensor") \
         .tag("TVOCSensor", "virtual_TVOCSensor") \
         .tag("clientId", "lego_boost") \
-        .field(metric_name, float(data)) \
         .time(datetime.datetime.utcnow())
+
+    for key, value in data.items():
+        p = p.field(key, float(value))
+
     logging.info("> " + p.to_line_protocol())
     client_mqtt.publish(topic, p.to_line_protocol())
 
 
-def led_random(mhub):
-    for x in range(20):
-        mhub.led.set_color(random.randrange(0, 10))
-
-
 def run(mhub):
-    def a_callback(speed):
-        data_send("TVOC", speed)
+    sensor_data = {}
 
-    def rgb_callback(values):
-        data_send("rgb", values)
+    def a_callback(speed):
+        sensor_data["TVOC"] = speed
+
+    def led_rgb_callback(color):
+        sensor_data["rgb"] = color
 
     def axis_callback(x, y, z):
-        data_send("Pressure", x)
-        data_send("Temperature", y)
-        data_send("Humidity", z)
+        sensor_data["Temperature"] = x
+        sensor_data["Humidity"] = y
+        send(sensor_data)
 
-    def battery_callback(values):
-        data_send("CO2", values)
+    def battery_callback(voltage):
+        sensor_data["CO2"] = voltage
+
+    def vision_callback(color, distance):
+        sensor_data["Pressure"] = distance
 
     mhub.motor_A.subscribe(a_callback, mode=EncodedMotor.SENSOR_ANGLE)
-    mhub.led.subscribe(rgb_callback)
+    mhub.led.subscribe(led_rgb_callback)
     mhub.tilt_sensor.subscribe(axis_callback, mode=TiltSensor.MODE_3AXIS_ACCEL)
+    mhub.vision_sensor.subscribe(vision_callback)
     mhub.voltage.subscribe(battery_callback)
 
     try:
@@ -75,7 +79,7 @@ def run(mhub):
         raise KeyboardInterrupt
 
     finally:
-        mhub.led.unsubscribe(rgb_callback)
+        mhub.led.unsubscribe(led_rgb_callback)
         mhub.tilt_sensor.unsubscribe(axis_callback)
         mhub.voltage.unsubscribe(battery_callback)
         mhub.motor_A.unsubscribe(a_callback)

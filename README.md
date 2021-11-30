@@ -120,9 +120,9 @@ The demo will autodetect your lego hub and start in 5-10s. The output should loo
 
 Lego metrics are mapped to IoT Center hardcoded weather metrics:
 
-- Temperature -> total tilt / tilt from the vertical direction
-- Humidity -> forward and backward tilt
-- Pressure -> sideway tilt
+- Temperature -> tilt axe X
+- Humidity -> tilt axe Y
+- Pressure -> distance sensor
 - CO2 -> battery voltage
 - TVOC -> motor angle
 
