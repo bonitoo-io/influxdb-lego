@@ -5,18 +5,41 @@ dashboards.
 
 ![img.png](docs/boost-robot.png)
 
-## Description: 
+## Description 
 
-This application was designed to display and store real-time data from LEGO Mindstorm Robot Inventor and LEGO Boost because the application from LEGO lacks this feature. We used InfluxDB to store the data since it's the fastest way to do so. The code was written in MicroPython since it supports all we needed. 
-**Our program should do**: Real-time data logging and visualization of data in graphs from gyro sensor and motors.
-**Plans for the future**: We want this application to monitor all lego robots, such as Robot Inventor and EV3, so that we can then monitor color, ultrasonic, and infrared sensors and not just gyro sensor and motors. Our program will also provide some calculations based on the data it monitors such as speed, acceleration, trajectory, energy consumption, lead (for racing), health (for robot battles), work performance (for lego factories), and more. 
+This application was designed to display and store real-time data from LEGO Mindstorm Robot Inventor and LEGO Boost
+because the application from LEGO lacks this feature. We used InfluxDB to store the data since it's the fastest way to
+do so. 
 
-## How to install 
+In future we want to support monitoring of all lego robots, such as Robot Inventor and EV3, so that we can then store
+time series for color, ultrasonic, and infrared sensors and not just gyro sensor and motors. Our program will also
+provide some calculations based on the data it monitors such as speed, acceleration, trajectory, energy consumption,
+lead (for racing), health (for robot battles), work performance (for lego factories), and more.
+
+## How to install
+
 ### IoT Center setup
-After cloning this repository, you should be ready to set up our IoT Center.
-At first, you should download and install docker from here: https://www.docker.com/get-started.
+
+After cloning this repository, you should be ready to set up our IoT Center. 
+
+We recommend using Python Virtual Environment <https://docs.python.org/3/tutorial/venv.html>
+to have a clean setup.
+
+```bash
+https://github.com/bonitoo-io/influxdb-lego.git
+cd influxdb-lego
+
+python3 -m venv venv
+source venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+At first, you should download and install docker from here: https://www.docker.com/get-started. 
+
 After that, you will need to set your real local network IP address into `EXTERNAL_IP` variable in `.env`.
-To find your IP address, simply open a Linux terminal and type:
+
+To find your IP on Mac address, simply open a terminal and type:
 
 ```bash
 ipconfig getifaddr en0
@@ -28,7 +51,7 @@ Copy to clipboard and then execute this command:
 # edit .env and set 
 nano .env
 ```
-Fill your `EXTERNAL_IP` and then go back using `ctrl + x`.
+Fill your `EXTERNAL_IP` and then save it using `ctrl + x`.
 All you have to do now is to start the latest version of IotCenter using `docker-compose`.
 
 ```bash
@@ -50,20 +73,6 @@ on <http://localhost:5000/devices> and click **Register** to add a new device. E
 confirm by clicking **Register**.
 
 ![screen](docs/register.png)
-### Python3 requirements 
-
-I recommend using Python Virtual Environment <https://docs.python.org/3/tutorial/venv.html>
-to have a clean setup.
-
-```bash
-https://github.com/bonitoo-io/influxdb-lego.git
-cd influxdb-lego
-
-python3 -m venv venv
-source venv/bin/activate
-
-pip install -r requirements.txt
-```
 
 ### Prepare Lego Boost for Bluetooth pairing
 
