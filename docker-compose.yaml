@@ -42,4 +42,6 @@ services:
       - mosquitto
       - influxdb_v2
       - telegraf
+    volumes:
+      - $PWD/config/data:/usr/src/data
 
