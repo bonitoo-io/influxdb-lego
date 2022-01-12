@@ -85,14 +85,14 @@ class Lego_inventor():
         return([hub_info])#, [speed_A, power_A], [Speed_B, power_B], [speed_C, power_C])
 
 ble_name = Lego_inventor("Lego Hub", "A", "B")
-gay = MSHub()
+borec = MSHub()
 print(ble_name.rx)
 print(ble_name.tx)
 def data_extractor():
     message = []
-    message.append(gay.motion_sensor.get_yaw_angle())
+    message.append(borec.motion_sensor.get_yaw_angle())
     message.append(Motor("B").get_speed())
-    return "pyčo"
+    return "1234"
 
 from time import sleep_ms
 

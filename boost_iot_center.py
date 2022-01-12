@@ -6,7 +6,7 @@ from influxdb_client import Point
 from paho.mqtt import client as mqtt_client
 from playsound import playsound
 from pylgbst import logging, get_connection_bleak
-from pylgbst.hub import MoveHub
+from pylgbst.hub import MoveHub, VisionSensor
 from pylgbst.peripherals import EncodedMotor, TiltSensor
 
 from lego_utils import auto_search
@@ -32,10 +32,6 @@ def connect_mqtt():
 
 def send(data):
     p = Point("environment") \
-        .tag("CO2Sensor", "virtual_CO2Sensor") \
-        .tag("PressureSensor", "virtual_PressureSensor") \
-        .tag("HumiditySensor", "virtual_HumiditySensor") \
-        .tag("TVOCSensor", "virtual_TVOCSensor") \
         .tag("clientId", "lego_boost") \
         .time(datetime.datetime.utcnow())
 
@@ -50,26 +46,27 @@ def run(mhub):
     sensor_data = {}
 
     def a_callback(speed):
-        sensor_data["TVOC"] = speed
+        sensor_data["speed_a"] = speed
 
-    def led_rgb_callback(color):
-        sensor_data["rgb"] = color
+    def b_callback(speed):
+        sensor_data["speed_b"] = speed
 
     def axis_callback(x, y, z):
-        sensor_data["Temperature"] = x
-        sensor_data["Humidity"] = y
+        sensor_data["x_axis"] = x
+        sensor_data["y_axis"] = y
+        sensor_data["z_axis"] = z
         send(sensor_data)
 
     def battery_callback(voltage):
-        sensor_data["CO2"] = voltage
+        sensor_data["voltage"] = voltage
 
-    def vision_callback(color, distance):
-        sensor_data["Pressure"] = distance
+    def vision_callback(distance):
+        sensor_data["distance"] = distance
 
     mhub.motor_A.subscribe(a_callback, mode=EncodedMotor.SENSOR_ANGLE)
-    mhub.led.subscribe(led_rgb_callback)
+    mhub.motor_B.subscribe(b_callback, mode=EncodedMotor.SENSOR_ANGLE)
     mhub.tilt_sensor.subscribe(axis_callback, mode=TiltSensor.MODE_3AXIS_ACCEL)
-    mhub.vision_sensor.subscribe(vision_callback)
+    mhub.vision_sensor.subscribe(vision_callback, mode=VisionSensor.DISTANCE_INCHES)
     mhub.voltage.subscribe(battery_callback)
 
     try:
@@ -79,7 +76,7 @@ def run(mhub):
         raise KeyboardInterrupt
 
     finally:
-        mhub.led.unsubscribe(led_rgb_callback)
+        mhub.led.unsubscribe(b_callback)
         mhub.tilt_sensor.unsubscribe(axis_callback)
         mhub.voltage.unsubscribe(battery_callback)
         mhub.motor_A.unsubscribe(a_callback)

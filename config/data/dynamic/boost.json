@@ -1,0 +1,167 @@
+{
+  "$schema": "./schema.json",
+  "cells": [
+    {
+      "type": "svg",
+      "file": "boost_fix2",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 5
+      },
+      "field": [
+        "speed_a",
+        "speed_b",
+        "y_axis",
+        "voltage",
+        "z_axis",
+        "x_axis",
+        "y_axis"
+      ]
+    },
+    {
+      "type": "plot",
+      "plotType": "gauge",
+      "range": {
+        "min": -10,
+        "max": 50
+      },
+      "field": "speed_a",
+      "label": "speed_a",
+      "unit": "m s^-1",
+      "decimalPlaces": 1,
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "w": 4,
+        "h": 2
+      }
+    },
+    {
+      "type": "plot",
+      "plotType": "gauge",
+      "range": {
+        "min": -10,
+        "max": 50
+      },
+      "field": "distance",
+      "label": "distance",
+      "unit": "inches",
+      "decimalPlaces": 1,
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "w": 4,
+        "h": 2
+      }
+    },
+    {
+      "type": "plot",
+      "plotType": "gauge",
+      "range": {
+        "min": 0,
+        "max": 100
+      },
+      "field": "voltage",
+      "label": "voltage",
+      "unit": "V",
+      "decimalPlaces": 2,
+      "layout": {
+        "x": 4,
+        "y": 0,
+        "w": 4,
+        "h": 2
+      }
+    },
+    {
+      "type": "plot",
+      "plotType": "gauge",
+      "range": {
+        "min": 800,
+        "max": 1100
+      },
+      "field": "Speed_b",
+      "label": "Speed_b",
+      "unit": "m s^-2",
+      "decimalPlaces": 2,
+      "layout": {
+        "x": 8,
+        "y": 0,
+        "w": 4,
+        "h": 2
+      }
+    },
+    {
+      "type": "geo",
+      "latField": "x_axis",
+      "lonField": "y_axis",
+      "Live": {},
+      "Past": {},
+      "layout": {
+        "x": 0,
+        "y": 3,
+        "w": 12,
+        "h": 3
+      }
+    },
+    {
+      "type": "plot",
+      "plotType": "line",
+      "field": [
+        "voltage",
+        "votage"
+      ],
+      "label": "Battery voltage",
+      "layout": {
+        "x": 0,
+        "y": 6,
+        "w": 12,
+        "h": 3
+      }
+    },
+    {
+      "type": "plot",
+      "plotType": "line",
+      "field": [
+        "Speed_a",
+        "Speed_a"
+      ],
+      "label": "Speed_a",
+      "layout": {
+        "x": 0,
+        "y": 6,
+        "w": 12,
+        "h": 3
+      }
+    }, {
+      "type": "plot",
+      "plotType": "line",
+      "field": [
+        "distance",
+        "distance"
+      ],
+      "label": "Distance",
+      "layout": {
+        "x": 0,
+        "y": 6,
+        "w": 12,
+        "h": 3
+      }
+    },
+
+    {
+      "type": "plot",
+      "plotType": "line",
+      "field": "Speed_b",
+      "label": "Speed_b",
+      "layout": {
+        "x": 0,
+        "y": 12,
+        "w": 12,
+        "h": 3
+      }
+
+    }
+  ]
+}
