@@ -66,7 +66,7 @@
       "field": "speed_a",
       "label": "Motor A",
       "unit": " %",
-      "decimalPlaces": 1,
+      "decimalPlaces": 0,
       "layout": {
         "x": 6,
         "y": 3,
@@ -84,7 +84,7 @@
       "field": "speed_b",
       "label": "Motor B",
       "unit": " %",
-      "decimalPlaces": 2,
+      "decimalPlaces": 0,
       "layout": {
         "x": 9,
         "y": 0,
