@@ -129,5 +129,5 @@ Lego metrics are mapped to IoT Center hardcoded weather metrics:
 
 Check IoT Center: [http://localhost:5000/realtime/lego_boost](http://localhost:5000/realtime/lego_boost)
 
-![screen](docs/iot-center-lego.gif)
+![screen](docs/iot-centre-lego.gif)
 
