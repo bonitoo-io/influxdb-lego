@@ -63,8 +63,8 @@ def run(mhub):
     def vision_callback(distance):
         sensor_data["distance"] = distance
 
-    mhub.motor_A.subscribe(a_callback, mode=EncodedMotor.SENSOR_ANGLE)
-    mhub.motor_B.subscribe(b_callback, mode=EncodedMotor.SENSOR_ANGLE)
+    mhub.motor_A.subscribe(a_callback, mode=EncodedMotor.SENSOR_SPEED)
+    mhub.motor_B.subscribe(b_callback, mode=EncodedMotor.SENSOR_SPEED)
     mhub.tilt_sensor.subscribe(axis_callback, mode=TiltSensor.MODE_3AXIS_ACCEL)
     mhub.vision_sensor.subscribe(vision_callback, mode=VisionSensor.DISTANCE_INCHES)
     mhub.voltage.subscribe(battery_callback)
@@ -80,7 +80,6 @@ def run(mhub):
         mhub.tilt_sensor.unsubscribe(axis_callback)
         mhub.voltage.unsubscribe(battery_callback)
         mhub.motor_A.unsubscribe(a_callback)
-
 
 def zorba_dance(mhub):
     maxbl = 60 / 42  # 6O / bpm
@@ -128,7 +127,7 @@ def zorba_dance(mhub):
         sleep(p)
 
     # Zorba Dance version (https://musescore.com/user/14008706/scores/4866772)
-    playsound('Zorba_s_Dance_Sirrtaki.mp3', block=False)
+    #playsound('Zorba_s_Dance_Sirrtaki.mp3', block=False)
     sleep(5)
 
     for x in range(3):

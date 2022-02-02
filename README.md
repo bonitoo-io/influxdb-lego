@@ -120,13 +120,14 @@ The demo will autodetect your lego hub and start in 5-10s. The output should loo
 
 Lego metrics are mapped to IoT Center hardcoded weather metrics:
 
-- Temperature -> tilt axe X
-- Humidity -> tilt axe Y
-- Pressure -> distance sensor
-- CO2 -> battery voltage
-- TVOC -> motor angle
+- axis x -> tilt axe X
+- axis y -> tilt axe Y
+- axis z -> tilt axe Z
+- Distance -> distance sensor
+- Voltage -> battery voltage
+- Motor A/Motor B -> current motor output
 
 Check IoT Center: [http://localhost:5000/realtime/lego_boost](http://localhost:5000/realtime/lego_boost)
 
-![screen](docs/iot-center-lego-stream.gif)
+![screen](docs/iot-center-lego.gif)
 
