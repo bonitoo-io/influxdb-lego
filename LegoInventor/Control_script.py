@@ -1,3 +1,4 @@
+#this is part for controlling lego from computer.
 import os, sys
 import asyncio
 from datetime import datetime
