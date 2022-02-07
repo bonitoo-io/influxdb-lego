@@ -33,11 +33,11 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - INFLUX_URL=http://${EXTERNAL_IP}:8086
+      - INFLUX_URL=http://influxdb_v2:8086
       - INFLUX_TOKEN=my-token
       - INFLUX_ORG=my-org
       - MQTT_TOPIC=iot_center
-      - MQTT_URL=mqtt://${EXTERNAL_IP}:1883
+      - MQTT_URL=mqtt://mosquitto:1883
     depends_on:
       - mosquitto
       - influxdb_v2

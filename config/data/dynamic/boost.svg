@@ -125,7 +125,7 @@
          id="tspan30789"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.159486"
          x="11.901724"
-         y="196.11064">Motor B {speed_b} %</tspan></text>
+         y="196.11064">Motor A {speed_a} %</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.159486"
@@ -137,5 +137,12 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.159486"
          x="19.112648"
          y="85.966774">Distance {distance} ″ </tspan></text>
+    <g
+       id="g108">
+      <path
+         style="fill:#ffffff;stroke-width:2.6367"
+         d=""
+         id="path68" />
+    </g>
   </g>
 </svg>
