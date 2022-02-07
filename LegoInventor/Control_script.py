@@ -140,10 +140,6 @@ class Connection:
             self.data_dump_handler(self.rx_data, self.rx_timestamps, self.rx_delays)
             self.clear_lists()
 
-
-#############
-# Loops
-#############
 async def user_console_manager(connection: Connection):
     while True:
         if connection.client and connection.connected:
