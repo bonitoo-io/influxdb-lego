@@ -118,7 +118,7 @@ The demo will autodetect your lego hub and start in 5-10s. The output should loo
 13351	INFO	root	> environment,CO2Sensor=virtual_CO2Sensor,HumiditySensor=virtual_HumiditySensor,PressureSensor=virtual_PressureSensor,TVOCSensor=virtual_TVOCSensor,clientId=lego_boost Pressure=2 1636729176347604000
 ```
 
-Lego metrics are mapped to IoT Center hardcoded weather metrics:
+Lego metrics are coded in following manner:
 
 - axis x -> tilt axe X
 - axis y -> tilt axe Y
