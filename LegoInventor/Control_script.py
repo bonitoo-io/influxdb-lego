@@ -160,7 +160,7 @@ async def main():
         await asyncio.sleep(5)
 
 
-#read_characteristic = 'a8565848-4622-11ec-81d3-0242ac130003' ORIGINÁLY
+#read_characteristic = 'a8565848-4622-11ec-81d3-0242ac130003' ORIGINAL
 #write_characteristic = '9a46b2a2-4622-11ec-81d3-0242ac130003'
 
 read_characteristic = 'c3614996-4626-11ec-81d3-0242ac130003'
