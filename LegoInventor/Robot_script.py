@@ -67,16 +67,6 @@ class Lego_inventor():
         self.ble.gap_advertise(100, adv_data)
         print(adv_data)
         print("\r\n")
-        # adv_data
-        # raw: 0x02010209094553503332424C45
-        # b'\x02\x01\x02\t\tESP32BLE'
-        #
-        # 0x02 - General discoverable mode
-        # 0x01 - AD Type = 0x01
-        # 0x02 - value = 0x02
-
-        # https://jimmywongiot.com/2019/08/13/advertising-payload-format-on-ble/
-        # https://docs.silabs.com/bluetooth/latest/general/adv-and-scanning/bluetooth-adv-data-basics
     def data_send(self):
         speed_A, encoderA, abs_encoder_A, power_A = hub.port.motorA.get()
         speed_B, encoderB, abs_encoder_B, power_B = hub.port.motorB.get()
