@@ -37,22 +37,7 @@ pip install -r requirements.txt
 
 At first, you should download and install docker from here: https://www.docker.com/get-started. 
 
-After that, you will need to set your real local network IP address into `EXTERNAL_IP` variable in `.env`.
-
-To find your IP on Mac address, simply open a terminal and type:
-
-```bash
-ipconfig getifaddr en0
-```
-
-Copy to clipboard and then execute this command:
-
-```bash
-# edit .env and set 
-nano .env
-```
-Fill your `EXTERNAL_IP` and then save it using `ctrl + x`.
-All you have to do now is to start the latest version of IotCenter using `docker-compose`.
+Then start the latest version of IotCenter using:
 
 ```bash
 docker-compose up
@@ -92,30 +77,30 @@ Run again and **immediately press the green button on lego brick**.
 The demo will autodetect your lego hub and start in 5-10s. The output should look like this:
 
 ```text
-(venv) ➜  influxdb-lego git:(main) ✗ python ./boost-iot-center.py
-462	INFO	root	Searching for Lego Hub...
-10524	INFO	root	Connecting to Lego Hub...
-10526	INFO	comms-bleak	Discovering devices... Press green button on Hub
-11618	INFO	comms	Found Move Hub at BBF17DA9-7FC1-408F-B829-B58A9B8507CA
-11618	INFO	comms-bleak	Device matched: BBF17DA9-7FC1-408F-B829-B58A9B8507CA: Move Hub
-12390	INFO	hub	Attached peripheral: EncodedMotor on port 0x0
-12402	INFO	hub	Attached peripheral: EncodedMotor on port 0x1
-12413	INFO	hub	Attached peripheral: VisionSensor on port 0x2
-12424	INFO	hub	Attached peripheral: EncodedMotor on port 0x3
-12437	INFO	hub	Attached peripheral: EncodedMotor on port 0x10
-12448	INFO	hub	Attached peripheral: LEDRGB on port 0x32
-12461	INFO	hub	Attached peripheral: TiltSensor on port 0x3a
-12472	INFO	hub	Attached peripheral: Current on port 0x3b
-12482	INFO	hub	Attached peripheral: Voltage on port 0x3c
-12495	WARNING	hub	Have no dedicated class for peripheral type 0x42 (UNKNOWN) on port 0x46
-12495	INFO	hub	Attached peripheral: Peripheral on port 0x46
-12723	INFO	hub	b'Move Hub' on b'001653bf6d29'
-12833	INFO	hub	Voltage: 100%
-12935	INFO	root	Running Demo...
-13049	INFO	root	> environment,CO2Sensor=virtual_CO2Sensor,HumiditySensor=virtual_HumiditySensor,PressureSensor=virtual_PressureSensor,TVOCSensor=virtual_TVOCSensor,clientId=lego_boost TVOC=-1 1636729176045009000
-13148	INFO	root	> environment,CO2Sensor=virtual_CO2Sensor,HumiditySensor=virtual_HumiditySensor,PressureSensor=virtual_PressureSensor,TVOCSensor=virtual_TVOCSensor,clientId=lego_boost TVOC=-1 1636729176145016000
-13251	INFO	root	> environment,CO2Sensor=virtual_CO2Sensor,HumiditySensor=virtual_HumiditySensor,PressureSensor=virtual_PressureSensor,TVOCSensor=virtual_TVOCSensor,clientId=lego_boost rgb=3 1636729176247289000
-13351	INFO	root	> environment,CO2Sensor=virtual_CO2Sensor,HumiditySensor=virtual_HumiditySensor,PressureSensor=virtual_PressureSensor,TVOCSensor=virtual_TVOCSensor,clientId=lego_boost Pressure=2 1636729176347604000
+355	INFO	root	Discovering devices... Press the green button on Hub
+5450	INFO	comms-bleak	Discovering devices... Press green button on Hub
+6538	INFO	comms	Found Move Hub at 24931243-B7C5-6CE4-C192-D4E69C5CB3E4
+6538	INFO	comms-bleak	Device matched: 24931243-B7C5-6CE4-C192-D4E69C5CB3E4: Move Hub
+6894	INFO	hub	Attached peripheral: EncodedMotor on port 0x0
+6905	INFO	hub	Attached peripheral: EncodedMotor on port 0x1
+6917	INFO	hub	Attached peripheral: VisionSensor on port 0x2
+6929	INFO	hub	Attached peripheral: EncodedMotor on port 0x3
+6941	INFO	hub	Attached peripheral: EncodedMotor on port 0x10
+6953	INFO	hub	Attached peripheral: LEDRGB on port 0x32
+6964	INFO	hub	Attached peripheral: TiltSensor on port 0x3a
+6977	INFO	hub	Attached peripheral: Current on port 0x3b
+6988	INFO	hub	Attached peripheral: Voltage on port 0x3c
+7001	WARNING	hub	Have no dedicated class for peripheral type 0x42 (UNKNOWN) on port 0x46
+7001	INFO	hub	Attached peripheral: Peripheral on port 0x46
+7192	INFO	hub	b'Move Hub' on b'001653bf6d29'
+7295	INFO	hub	Voltage: 100%
+7399	INFO	root	Running Demo...
+7709	INFO	root	> environment,clientId=lego_boost speed_a=0,speed_b=0,x_axis=2,y_axis=-62,z_axis=4 1644851818642053000
+7719	INFO	root	> environment,clientId=lego_boost speed_a=0,speed_b=0,x_axis=2,y_axis=-61,z_axis=4 1644851818653587000
+7741	INFO	root	> environment,clientId=lego_boost speed_a=0,speed_b=0,x_axis=3,y_axis=-63,z_axis=4 1644851818675525000
+7823	INFO	root	> environment,clientId=lego_boost distance=0,speed_a=0,speed_b=0,x_axis=3,y_axis=-62,z_axis=4 1644851818757454000
+7847	INFO	root	> environment,clientId=lego_boost distance=0,speed_a=0,speed_b=0,x_axis=3,y_axis=-62,z_axis=3 1644851818781242000
+7916	INFO	root	> environment,clientId=lego_boost distance=9,speed_a=0,speed_b=0,x_axis=3,y_axis=-62,z_axis=4 1644851818849990000
 ```
 
 Lego metrics are coded in following manner:
@@ -131,3 +116,11 @@ Check IoT Center: [http://localhost:5000/realtime/lego_boost](http://localhost:5
 
 ![screen](docs/iot-centre-lego.gif)
 
+### Note for macOS Monterey 12.2+
+
+At the moment, the latest version of the pylgbst (1.2.2) doesn't support macOS Monterey 12.2+, install the latest
+version from github using following pip command:
+
+```bash
+pip install git+https://github.com/undera/pylgbst
+```

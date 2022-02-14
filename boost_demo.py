@@ -81,7 +81,6 @@ if __name__ == '__main__':
         client = influxdb_client.InfluxDBClient(url=url, token=token, org=org)
         client.ping()
         write_api = client.write_api(write_options=ASYNCHRONOUS)
-        logging.info("Connecting to Lego Hub...")
         connection = get_connection_bleak(hub_mac=str(UUID), hub_name=str(name))
         parameters['connection'] = connection
         hub = MoveHub(**parameters)

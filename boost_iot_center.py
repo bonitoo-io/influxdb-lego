@@ -58,7 +58,7 @@ def run(mhub):
         send(sensor_data)
 
     def battery_callback(voltage):
-        sensor_data["voltage"] = voltage
+        sensor_data["voltage"] = round(voltage, 2)
 
     def vision_callback(distance):
         sensor_data["distance"] = distance
@@ -127,7 +127,7 @@ def zorba_dance(mhub):
         sleep(p)
 
     # Zorba Dance version (https://musescore.com/user/14008706/scores/4866772)
-    #playsound('Zorba_s_Dance_Sirrtaki.mp3', block=False)
+    playsound('Zorba_s_Dance_Sirrtaki.mp3', block=False)
     sleep(5)
 
     for x in range(3):
@@ -165,6 +165,7 @@ def zorba_dance(mhub):
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, format='%(relativeCreated)d\t%(levelname)s\t%(name)s\t%(message)s')
     parameters = {}
     hub = None
     try:
